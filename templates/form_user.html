@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Insert New User</title>
+    </head>
+    <body>
+        <div id="container">
+            <div class="title">
+                <h1>Add New User</h1>
+            </div>
+            <div id="content">
+                <form method="post" action="{{ url_for('users') }}">
+                  <label for="firstname">Competitor first name:</label>
+                  <input type="text" name="firstname" /><br/>
+
+                  <label for="lastname">Competitor last name:</label>
+                  <input type="text" name="lastname" /><br/>
+
+                  <label for="dob">Date of Birth (YYYY-MM-DD):</label>
+                  <input type="text" name="dob" /><br/>
+
+
+                  <label for="affiliation">Affiliation:</label>
+                  <input type="text" name="affiliation" /><br/>
+
+                  <label for="rank">Rank:</label>
+                  <input type="text" name="rank" value="1"/><br/><br>
+
+                  <label for="sex">Sex:</label>
+                  <input type="text" name="sex" value="0"/><br/><br>
+
+                  <input type="submit" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
