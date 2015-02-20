@@ -8,15 +8,16 @@ from datetime import datetime
 import random
 
 from flask import Flask, request, url_for, render_template
-#from flask_cors import CORS
+# from flask_cors import CORS
 
 app = Flask(__name__)
-#cors = CORS(app)
+# cors = CORS(app)
 
-conn = psycopg2.connect(host='ec2-174-129-213-103.compute-1.amazonaws.com', port=5432, user='fepxmeilqyizmq', password='9x4u4WhrkiETKUcORi5Y-e-3ix', database='dbgl3jc6vv1h0c')
+conn = psycopg2.connect(host='ec2-174-129-213-103.compute-1.amazonaws.com', port=5432, user='fepxmeilqyizmq',
+                        password='9x4u4WhrkiETKUcORi5Y-e-3ix', database='dbgl3jc6vv1h0c')
 cursor = conn.cursor()
 
-#dq = "DELETE FROM users WHERE (last_name='Constantino');"
+# dq = "DELETE FROM users WHERE (last_name='Constantino');"
 #cursor.execute(dq)
 #conn.commit()
 
@@ -27,11 +28,11 @@ cursor = conn.cursor()
 
 
 def random_date():
-  year = random.choice(range(1986, 1997))
-  month = random.choice(range(1, 13))
-  day = random.choice(range(1, 31))
-  rd = datetime(year, month, day)
-  return rd.strftime("%Y-%m-%d")
+    year = random.choice(range(1986, 1997))
+    month = random.choice(range(1, 13))
+    day = random.choice(range(1, 31))
+    rd = datetime(year, month, day)
+    return rd.strftime("%Y-%m-%d")
 
 
 def getBracketCount():
@@ -55,13 +56,14 @@ def getUsers(count=0, rank=0, random=False):
     conn.commit()
     return cursor.fetchall()
 
+
 @app.route('/')
 def hello():
     return "Dream BJJ app"
 
+
 @app.route('/list')
 def list():
-
     count = 0
     random = False
     rank = 0
@@ -106,7 +108,9 @@ def brackets():
         q = ''
         for b in data["brackets"]:
             id = getBracketCount()
-            q = "INSERT INTO brackets(id,c1_id,c2_id,level,result,tournament_id) VALUES ('" + str(id) + "','" + str(b["c1_id"]) + "','" + str(b["c2_id"]) + "','" + str(b["level"]) + "','" + str(b["result"]) + "','" + str(b["tournament_id"]) + "');"
+            q = "INSERT INTO brackets(id,c1_id,c2_id,level,result,tournament_id) VALUES ('" + str(id) + "','" + str(
+                b["c1_id"]) + "','" + str(b["c2_id"]) + "','" + str(b["level"]) + "','" + str(
+                b["result"]) + "','" + str(b["tournament_id"]) + "');"
             ret = q
             cursor.execute(q)
             conn.commit()
@@ -122,11 +126,9 @@ def brackets():
     return '<pre>' + str(bracket_table) + '</pre>'
 
 
-
 @app.route('/generate_brackets', methods=["GET", "POST"])
 def generate_bracket():
-
-
+    return 1
 
 @app.route('/users/', methods=['GET', 'POST'])
 def users():
@@ -146,7 +148,10 @@ def users():
         form_string += 'Rank: ' + request.form['rank'] + '<br>'
         form_string += 'Sex: ' + request.form['sex'] + '<br>'
 
-        q = "INSERT INTO users(id,first_name,last_name,affiliation,dob,rank,elo,sex) VALUES ('" + str(uuid.uuid4()) + "', '" + request.form['firstname'] + "', '" + request.form['lastname'] + "', '" + request.form['affiliation'] + "', '" + dob + "', " + request.form['rank'] + ", 1500," + request.form['sex'] + ");"
+        q = "INSERT INTO users(id,first_name,last_name,affiliation,dob,rank,elo,sex) VALUES ('" + str(
+            uuid.uuid4()) + "', '" + request.form['firstname'] + "', '" + request.form['lastname'] + "', '" + \
+            request.form['affiliation'] + "', '" + dob + "', " + request.form['rank'] + ", 1500," + request.form[
+                'sex'] + ");"
         cursor.execute(q)
         conn.commit()
 
