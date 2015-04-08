@@ -1,1 +1,2 @@
-web: gunicorn app:app
+web: java $JAVA_OPTS -jar target/*.jar
+
